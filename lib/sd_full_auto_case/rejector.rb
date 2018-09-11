@@ -65,6 +65,7 @@ module SDFullAutoCase
       expired_cases.each_with_object([]) do |c4s3, memo|
         close_on_reject = c4s3[:close_on_reject]
         next if close_on_reject == RespondToMessage::CLOSE_ON_REJECT_MARK
+
         memo << c4s3[:id]
       end
     end
@@ -77,6 +78,7 @@ module SDFullAutoCase
       expired_cases.each_with_object([]) do |c4s3, memo|
         close_on_reject = c4s3[:close_on_reject]
         next unless close_on_reject == RespondToMessage::CLOSE_ON_REJECT_MARK
+
         memo << c4s3[:id]
       end
     end

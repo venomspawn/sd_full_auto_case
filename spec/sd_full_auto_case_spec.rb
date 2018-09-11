@@ -950,12 +950,12 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_issuance
           end
 
-          it "should set `close_on_reject` to appropriate value`" do
+          it 'should set `close_on_reject` to appropriate value`' do
             subject
             expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
@@ -973,7 +973,7 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_closed
           end
@@ -995,12 +995,12 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_issuance
           end
 
-          it "should set `close_on_reject` to appropriate value`" do
+          it 'should set `close_on_reject` to appropriate value`' do
             subject
             expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
@@ -1018,7 +1018,7 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_closed
           end
@@ -1067,7 +1067,7 @@ RSpec.describe SDFullAutoCase do
             expect { subject }.to change { case_state(c4s3) }.to('packaging')
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_packaging
           end
@@ -1089,12 +1089,12 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_issuance
           end
 
-          it "should set `close_on_reject` to appropriate value`" do
+          it 'should set `close_on_reject` to appropriate value`' do
             subject
             expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
@@ -1112,7 +1112,7 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_closed
           end
@@ -1134,12 +1134,12 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_issuance
           end
 
-          it "should set `close_on_reject` to appropriate value`" do
+          it 'should set `close_on_reject` to appropriate value`' do
             subject
             expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
@@ -1157,7 +1157,7 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          it "should set `case_status` to appropriate value`" do
+          it 'should set `case_status` to appropriate value`' do
             subject
             expect(case_status(c4s3)).to be == case_status_closed
           end
