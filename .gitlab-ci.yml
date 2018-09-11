@@ -1,0 +1,25 @@
+stages:
+  - build
+  - push
+
+build:
+  stage: build
+  tags:
+    - shell
+  script:
+    - docker build -t repo.it2.vm/gems/case_core/sd_full_auto_case:latest .
+    - docker push repo.it2.vm/gems/case_core/sd_full_auto_case:latest
+
+push:
+  stage: push
+  image: repo.it2.vm/gems/case_core/sd_full_auto_case:latest
+  only:
+    - tags
+  tags:
+    - docker
+  script:
+    - bundle exec rspec --fail-fast
+    - gem install nexus
+    - gem build sd_full_auto_case.gemspec
+    - gem nexus *.gem
+  when: on_success

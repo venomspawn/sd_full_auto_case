@@ -1,0 +1,28 @@
+---
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - cm/**/*
+    - tmp/**/*
+    - spec/fixtures/**/*
+    - .irbrc
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*_spec.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb
+    - spec/factories/**/*
+    - Rakefile
+    - Vagrantfile
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/RaiseArgs:
+  Enabled: false
