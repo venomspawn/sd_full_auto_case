@@ -1,0 +1,10 @@
+apt_packages:
+  - git
+  - mc
+  - vim
+  - wget
+  - ruby2.4-dev
+  - g++
+  - unrar
+
+ruby_version: 2.4

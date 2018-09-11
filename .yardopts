@@ -1,0 +1,6 @@
+--readme README.md
+--title 'SDFullAutoCase Documentation'
+--charset utf-8
+--markup markdown
+--private
+- CHANGELOG.md docs/**/*.md
