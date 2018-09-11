@@ -15,6 +15,10 @@ module SDFullAutoCase
       closed:    'Закрыта'
     }.freeze
 
+    # Отметка того, что заявку нужно закрыть, если результат оказания услуги не
+    # был выдан
+    CLOSE_ON_REJECT_MARK = '+'
+
     # rubocop: disable Layout/AlignHash
 
     # B1 (см. `docs/STATES.md`)
@@ -55,7 +59,8 @@ module SDFullAutoCase
          set:   {
            case_status: CASE_STATUS[:issuance],
            issuance_receiving_date: :now,
-           planned_finish_date: :planned_issuance_finish_date
+           planned_finish_date: :planned_issuance_finish_date,
+           close_on_reject: CLOSE_ON_REJECT_MARK
          },
          need:  %i[issue_method planned_issuance_finish_date]
 

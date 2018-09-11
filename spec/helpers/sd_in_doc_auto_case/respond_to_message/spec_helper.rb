@@ -50,6 +50,45 @@ module SDFullAutoCase
         case_attributes(c4s3.id)[:case_status]
       end
 
+      # Возвращает строку с человекочитаемым названием статуса выдачи заявки
+      # @return [String]
+      #   результирующая строка
+      def case_status_issuance
+        CASE_STATUS[:issuance]
+      end
+
+      # Возвращает строку с человекочитаемым названием статуса закрытия заявки
+      # @return [String]
+      #   результирующая строка
+      def case_status_closed
+        CASE_STATUS[:closed]
+      end
+
+      # Возвращает строку с человекочитаемым названием статуса формирования
+      # пакета документов заявки
+      # @return [String]
+      #   результирующая строка
+      def case_status_packaging
+        CASE_STATUS[:packaging]
+      end
+
+      # Возвращает значение атрибута `close_on_reject` заявки
+      # @param [CaseCore::Models::Case] c4s3
+      #   запись заявки
+      # @return [NilClass, String]
+      #   значение атрибута `close_on_reject` или `nil`, если атрибут
+      #   отсутствует или его значение пусто
+      def case_close_on_reject(c4s3)
+        case_attributes(c4s3.id)[:close_on_reject]
+      end
+
+      # Возвращает значение {CLOSE_ON_REJECT_MARK}
+      # @return [String]
+      #   значение {CLOSE_ON_REJECT_MARK}
+      def close_on_reject_mark
+        CLOSE_ON_REJECT_MARK
+      end
+
       # Возвращает значение атрибута `closed_date` заявки
       # @param [CaseCore::Models::Case] c4s3
       #   запись заявки

@@ -250,8 +250,12 @@ module SDFullAutoCase
 
     # C8
     edge issuance: :rejecting,
-         need:     %i[planned_rejecting_date planned_rejecting_finish_date],
-         check:    -> { !can_be_issued? },
+         need: %i[
+           planned_rejecting_date
+           planned_rejecting_finish_date
+           close_on_reject
+         ],
+         check:    -> { !can_be_issued? && !close_on_reject? },
          raise:    Errors::IssuanceRejecting,
          set: {
            case_status: CASE_STATUS[:rejecting],
@@ -261,8 +265,8 @@ module SDFullAutoCase
 
     # C9
     edge issuance: :closed,
-         need:     :planned_rejecting_date,
-         check:    -> { can_be_issued? },
+         need:     %i[planned_rejecting_date close_on_reject],
+         check:    -> { can_be_issued? || close_on_reject? },
          raise:    Errors::IssuanceClosed,
          set: {
            case_status: CASE_STATUS[:closed],
@@ -327,6 +331,14 @@ module SDFullAutoCase
         Date.today < planned_rejecting_date.to_date
       rescue StandardError
         true
+      end
+
+      # Возвращает, надо ли закрыть заявку, если результат оказания услуги не
+      # был выдан
+      # @return [Boolean]
+      #   результирующее булево значение
+      def close_on_reject?
+        close_on_reject == RespondToMessage::CLOSE_ON_REJECT_MARK
       end
     end
 

@@ -460,8 +460,43 @@ RSpec.describe SDFullAutoCase do
       context 'when now date is more than value of `planned_rejecting_date`' do
         let(:planned_rejecting_date) { Time.now - 24 * 60 * 60 }
 
-        it 'should raise RuntimeError' do
-          expect { subject }.to raise_error(RuntimeError)
+        context 'when `close_on_reject` attribute value is absent' do
+          it 'should raise RuntimeError' do
+            expect { subject }.to raise_error(RuntimeError)
+          end
+        end
+
+        context 'when `close_on_reject` attribute value is nil' do
+          let!(:attr) { create(:case_attribute, attr_args) }
+          let(:attr_args) { { name: name, value: nil, case_id: c4s3.id } }
+          let(:name) { 'close_on_reject' }
+
+          it 'should raise RuntimeError' do
+            expect { subject }.to raise_error(RuntimeError)
+          end
+        end
+
+        mark = described_class::RespondToMessage::CLOSE_ON_REJECT_MARK
+        context "when `close_on_reject` attribute value is not `#{mark}`" do
+          let!(:attr) { create(:case_attribute, attr_args) }
+          let(:attr_args) { { name: name, value: value, case_id: c4s3.id } }
+          let(:name) { 'close_on_reject' }
+          let(:value) { 'not mark' }
+
+          it 'should raise RuntimeError' do
+            expect { subject }.to raise_error(RuntimeError)
+          end
+        end
+
+        context "when `close_on_reject` attribute value is `#{mark}`" do
+          let!(:attr) { create(:case_attribute, attr_args) }
+          let(:attr_args) { { name: name, value: value, case_id: c4s3.id } }
+          let(:name) { 'close_on_reject' }
+          let(:value) { mark }
+
+          it 'should set case state to `closed`' do
+            expect { subject }.to change { case_state(c4s3) }.to('closed')
+          end
         end
       end
     end
@@ -523,6 +558,18 @@ RSpec.describe SDFullAutoCase do
 
       context 'when now date is less than value of `planned_rejecting_date`' do
         let(:planned_rejecting_date) { Time.now + 24 * 60 * 60 }
+
+        it 'should raise RuntimeError' do
+          expect { subject }.to raise_error(RuntimeError)
+        end
+      end
+
+      mark = described_class::RespondToMessage::CLOSE_ON_REJECT_MARK
+      context "when `close_on_reject` attribute value is `#{mark}`" do
+        let!(:attr) { create(:case_attribute, attr_args) }
+        let(:attr_args) { { name: name, value: value, case_id: c4s3.id } }
+        let(:name) { 'close_on_reject' }
+        let(:value) { mark }
 
         it 'should raise RuntimeError' do
           expect { subject }.to raise_error(RuntimeError)
@@ -903,10 +950,14 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:issuance]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_issuance
+          end
+
+          it "should set `close_on_reject` to appropriate value`" do
+            subject
+            expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
         end
 
@@ -922,10 +973,9 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:closed]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_closed
           end
         end
       end
@@ -945,10 +995,14 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:issuance]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_issuance
+          end
+
+          it "should set `close_on_reject` to appropriate value`" do
+            subject
+            expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
         end
 
@@ -964,10 +1018,9 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:closed]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_closed
           end
         end
       end
@@ -1014,10 +1067,9 @@ RSpec.describe SDFullAutoCase do
             expect { subject }.to change { case_state(c4s3) }.to('packaging')
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:packaging]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_packaging
           end
         end
       end
@@ -1037,10 +1089,14 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:issuance]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_issuance
+          end
+
+          it "should set `close_on_reject` to appropriate value`" do
+            subject
+            expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
         end
 
@@ -1056,10 +1112,9 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:closed]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_closed
           end
         end
       end
@@ -1079,10 +1134,14 @@ RSpec.describe SDFullAutoCase do
               .of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:issuance]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_issuance
+          end
+
+          it "should set `close_on_reject` to appropriate value`" do
+            subject
+            expect(case_close_on_reject(c4s3)).to be == close_on_reject_mark
           end
         end
 
@@ -1098,10 +1157,9 @@ RSpec.describe SDFullAutoCase do
             expect(case_closed_date(c4s3)).to be_within(1).of(Time.now)
           end
 
-          value = described_class::RespondToMessage::CASE_STATUS[:closed]
-          it "should set `case_status` case attribute to `#{value}`" do
+          it "should set `case_status` to appropriate value`" do
             subject
-            expect(case_status(c4s3)).to be == value
+            expect(case_status(c4s3)).to be == case_status_closed
           end
         end
       end

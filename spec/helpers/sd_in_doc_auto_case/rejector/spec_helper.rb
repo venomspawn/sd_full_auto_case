@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module SDFullAutoCase
-  module Rejector
-    # Вспомогательный модуль, подключаемый к тестам модуля
+  class Rejector
+    # Вспомогательный модуль, подключаемый к тестам класса
     # `SDFullAutoCase::Rejector`
     module SpecHelper
       # Создаёт запись заявки с необходимыми атрибутами
@@ -61,6 +61,16 @@ module SDFullAutoCase
       #   отсутствует или его значение пусто
       def case_rejecting_date(c4s3)
         case_time_at(c4s3, :rejecting_date)
+      end
+
+      # Возвращает значение атрибута `closed_date` заявки
+      # @param [CaseCore::Models::Case] c4s3
+      #   запись заявки
+      # @return [NilClass, Time]
+      #   значение атрибута `closed_date` или `nil`, если атрибут
+      #   отсутствует или его значение пусто
+      def case_closed_date(c4s3)
+        case_time_at(c4s3, :closed_date)
       end
     end
   end

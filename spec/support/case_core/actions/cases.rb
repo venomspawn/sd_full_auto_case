@@ -70,7 +70,9 @@ module CaseCore
           memo << obj.case_id if obj.name == 'planned_rejecting_date' &&
                                  obj.value <= planned_rejecting_date
         end
-        (ids1 & ids2).map { |id| { id: id } }
+        (ids1 & ids2).map do |id|
+          show_attributes(id: id).tap { |hash| hash[:id] = id }
+        end
       end
 
       # Возвращает список ассоциативных массивов с идентификаторами заявок,
