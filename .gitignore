@@ -1,0 +1,16 @@
+# Инфраструктура
+.vagrant
+cm/provisioning/roles
+
+# Временные файлы
+tmp
+
+# Документация
+doc
+.yardoc
+
+# История команд IRB
+.irb_history
+
+# Собранные библиотеки
+*.gem

@@ -1,0 +1,15 @@
+---
+- hosts: local
+  become: yes
+
+  pre_tasks:
+    - name: "Autofollow to project on logon"
+      lineinfile:
+        dest: "/home/vagrant/.bashrc"
+        regexp: "^cd /vagrant"
+        line: "cd /vagrant"
+
+  roles:
+    - role: ruby-brightbox
+    - role: apt
+    - role: ntp

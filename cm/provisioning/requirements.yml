@@ -1,0 +1,8 @@
+- src: https://github.com/vterdunov/ansible-apt
+  name: apt
+
+- src: https://github.com/vterdunov/ansible-ruby-brightbox
+  name: ruby-brightbox
+
+- src: https://github.com/geerlingguy/ansible-role-ntp
+  name: ntp
