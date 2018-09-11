@@ -7,12 +7,6 @@ require 'irb'
 require 'irb/completion'
 
 begin
-  require_relative '../lib/sd_full_auto_case'
-rescue LoadError
-  nil
-end
-
-begin
   require_relative '../spec/spec_helper'
 rescue LoadError
   nil
